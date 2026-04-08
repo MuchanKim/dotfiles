@@ -88,3 +88,17 @@ On other machines:
 ```bash
 cd ~/dotfiles && git pull
 ```
+
+## Changelog
+
+### 2026-04-08
+- Rewrite `git-conventions.md`: new `[Type] #issue` format, flexible commit language (Korean/English per project), AI trace forbidden
+- Add `swift-conventions.md`: Swift naming conventions as opt-in per-project rules
+- Slim down `apple-platform.md`: remove architecture/project structure (moved to templates), keep platform-common rules only
+- Add `templates/`: Apple project CLAUDE.md template + interactive init script
+- Add `mcp.json.template`: Obsidian MCP with iCloud path support
+- Update `CLAUDE.md`: commit now requires user approval, Apple project init script reference added
+- Update `install.sh`: support templates and MCP config generation
+
+### 2026-03-28
+- Initial dotfiles setup: CLAUDE.md, settings.json, rules/ (apple-platform, git-conventions, obsidian-conventions)
