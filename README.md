@@ -1,6 +1,6 @@
 # dotfiles
 
-Personal development environment configuration.
+Personal Claude Code development environment configuration.
 
 ## Quick Start
 
@@ -32,23 +32,46 @@ claude mcp add apple-docs --project -- npx -y @kimsungwhee/apple-docs-mcp@latest
 
 ```
 claude/
-├── CLAUDE.md              → ~/.claude/CLAUDE.md
-├── settings.json          → ~/.claude/settings.json
-└── rules/                 → ~/.claude/rules/
-    ├── apple-platform.md      Apple dev rules (architecture, App Store, SwiftUI)
-    ├── git-conventions.md     Commit format, branching strategy, PR rules
-    └── obsidian-conventions.md  Note types, frontmatter, knowledge graph conventions
+├── CLAUDE.md                  → ~/.claude/CLAUDE.md (global agent rules)
+├── settings.json              → ~/.claude/settings.json (runtime config)
+├── mcp.json.template          → ~/.claude/.mcp.json (generated with $HOME substitution)
+├── rules/                     → ~/.claude/rules/
+│   ├── git-conventions.md         Commit, PR, issue, branch rules
+│   ├── apple-platform.md         Apple dev rules (build, App Store, SwiftUI)
+│   ├── swift-conventions.md      Swift naming conventions (opt-in per project)
+│   └── obsidian-conventions.md   Note types, frontmatter, knowledge graph
+└── templates/                 → ~/.claude/templates/
+    ├── apple-project.md          Project CLAUDE.md template for Apple apps
+    └── init-apple-project.sh     Interactive setup script (platform, arch, distribution)
 ```
 
 ## Usage in Projects
 
-Reference global rules from a project's `CLAUDE.md`:
+### Apple project setup
+
+Run the init script from the project root:
+
+```bash
+~/.claude/templates/init-apple-project.sh
+```
+
+Or Claude will suggest running it when it detects a new Apple project without a CLAUDE.md.
+
+### Reference global rules from a project CLAUDE.md
 
 ```markdown
 @~/.claude/rules/apple-platform.md
+@~/.claude/rules/swift-conventions.md
 ```
 
-This loads the shared rules into the project context. Project-specific rules stay in the project's own `CLAUDE.md`.
+### Set commit language per project
+
+In project's `.claude/CLAUDE.md`:
+
+```markdown
+## Project Overrides
+- Commit/PR/Issue language: Korean
+```
 
 ## Updating
 
@@ -56,7 +79,7 @@ Edit files in `~/dotfiles/` directly — symlinks make changes take effect immed
 
 ```bash
 cd ~/dotfiles
-git add -A && git commit -m "update: description"
+git add -A && git commit -m "[Chore] #N - description"
 git push
 ```
 

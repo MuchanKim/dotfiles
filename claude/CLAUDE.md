@@ -14,6 +14,7 @@
 ## Project Setup First
 - When entering a new project or a project without scope-level rules (e.g., no project CLAUDE.md), set up project rules before writing any code.
 - Ask the user what kind of development this is and confirm scope, target platform, and distribution method before proceeding.
+- For Apple projects, suggest running `~/.claude/templates/init-apple-project.sh` to generate project CLAUDE.md from template. This script interactively configures platform, distribution, architecture, and minimum OS version.
 
 ## Work Approach
 - Always read relevant files before writing or modifying code. Never guess at structure.
@@ -34,7 +35,8 @@
 - **Structural error handling** — When fixing errors, do NOT just patch the immediate symptom. Analyze the cascading scope, understand the system structure, and apply an architecturally stable fix.
 
 ## Permissions
-- **Free** — File read/edit, branch creation, commit, build/test execution, Issue creation: proceed without asking.
+- **Free** — File read/edit, branch creation, build/test execution, Issue creation: proceed without asking.
+- **Must confirm** — Commit: show the commit message to the user and get explicit approval before committing.
 - **Notify then proceed** — git push, PR creation, dependency addition: state what you're about to do, proceed unless user objects.
 - **Must ask** — main branch merge/push, branch deletion, file/directory deletion, CI/CD pipeline modification, system-level changes: require explicit user approval.
 

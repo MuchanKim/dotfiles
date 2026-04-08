@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "obsidian": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@bitbonsai/mcpvault",
+        "__HOME__/Library/Mobile Documents/com~apple~CloudDocs/Cortex"
+      ]
+    }
+  }
+}

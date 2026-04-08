@@ -1,71 +1,99 @@
 # Git Conventions
 
-## Commit Message Format
-```
-type: summary
+## Commit Message
 
-What: description of changes (Korean OK)
-Why: reason for the change (Korean OK)
+### Title Format
+`[Type] #issue-number - summary`
+
+- Team project (Korean): `[Feat] #1 - 앱 레이어 초기 구조 세팅`
+- Personal project (English): `[Feat] #1 - Initial app layer structure setup`
+
+> Language is specified per project in the project's CLAUDE.md. Defaults to English if unspecified.
+
+### Body
+
+```
+What?
+- Description of change 1
+- Description of change 2
+
+Why? (Optional)
+- Reason for the change
 ```
 
-### Commit Types
-- `feat`: New feature
-- `fix`: Bug fix
-- `chore`: Maintenance, config, dependencies
-- `refactor`: Code restructuring without behavior change
-- `docs`: Documentation only
-- `test`: Adding or updating tests
-- `ci`: CI/CD pipeline changes
-- `perf`: Performance improvement
-- `style`: Code style (formatting, no logic change)
-- `init`: Initial project setup
+- Section headers (What? / Why?) are always in English. Body language follows the title language.
+
+### Types
+- `[Init]` — Initial setup
+- `[Feat]` — New feature
+- `[Fix]` — Bug fix
+- `[Refactor]` — Refactoring
+- `[Test]` — Tests
+- `[Chore]` — Build, packages, config
+- `[Docs]` — Documentation
+- `[Style]` — Formatting, naming
 
 ### Rules
-- Summary: imperative mood, first letter uppercase, no period
-- Body: What/Why in Korean-English mixed style
-- Footer (optional): `Closes #issue`, `Refs #issue`
+- Title must be specific enough to understand the change without reading the diff.
+- Issue number is required. If no issue exists, ask the user before committing.
+- One commit per logical unit of work.
+- **Always show the commit message to the user and get explicit approval before committing.**
+- **Never include AI tool traces in commit messages (Co-Authored-By, Committed by, etc.).**
 
-## Branching Strategy
+### Tone (Korean commits)
+- Use concise developer shorthand: "~구현", "~적용", "~이전" — not formal "~했습니다".
+- Omit obvious descriptions. Only explain what isn't self-evident.
+- If there's a reason for the change, note it briefly (e.g., "Sendable 준수를 위해 ~변경").
+- Mark anything temporary or expected to change later.
 
-### Phase 1 — Pre 1.0.0 (Initial Development)
+### Tone (English commits)
+- Use imperative mood: "Add", "Fix", "Remove" — not "Added", "Fixed", "Removed".
+- Keep it concise. Omit obvious descriptions.
+
+## GitHub Issues
+
+- **Assignee and Label are required** when creating an issue.
+- Labels match issue types: ✨ Feat, 🐞 Bug, 📄 General, 🛠️ Refactor, ✏️ Chore, ⚙️ Setting
+- Title format: `[Label] 한글 요약` (e.g., `[⚙️ Setting] iOS 프로젝트 초기 세팅`)
+- Body: use polite form (~합니다).
+
+## Pull Request
+
+- Title format: `[Emoji Type] #issue-number - summary`
+- Example: `[✏️ Chore] #14 - CI 워크플로우 추가 (빌드 체크 + SwiftFormat)`
+- Types: `[✨ Feat]` | `[🐞 Fix]` | `[✏️ Chore]` | `[🛠️ Refactor]` | `[⚙️ Setting]` | `[📄 Docs]`
+- Follow PR template if one exists in the repository.
+- Always assign the repository owner as assignee.
+
+## Branches
+
+### Naming
+`type/#issue-number-short-description`
+
+| Type | Example |
+|------|---------|
+| Feature | `feat/#1-initial-setup` |
+| Fix | `fix/#34-null-crash` |
+| Release | `release/x.y.z` |
+| Hotfix | `fix/hotfix-crash-on-launch` |
+
+### Phase 1 — Pre 1.0.0
 ```
 feat/* ─┐
 fix/*   ┴──► PR ──► main ──► auto tag (0.x.x)
 ```
-- No develop branch — merge directly to main via PR
-- Minimize overhead, focus on iteration speed
-- Tags: `0.x.x`
+- No develop branch. Merge directly to main via PR. Prioritize iteration speed.
 
-### Phase 2 — Post 1.0.0 (After Release)
+### Phase 2 — Post 1.0.0
 ```
 feat/* ─┐
 fix/*   ┴──► PR ──► develop ──► release/x.y.z ──► QA ──► PR ──► main
                        ▲                                              │
                        └────────── reverse merge to develop ──────────┘
 ```
-1. Feature development: `feat/*`, `fix/*` branches PR to `develop`
-2. Release prep: Create `release/x.y.z` from develop
-3. QA: Test on release branch. Fix bugs directly on release branch
-4. Deploy: PR release → main
-5. Sync: Always reverse merge main → develop after merge
-6. Tag: Auto tag (`vx.y.z`) + GitHub Release on main merge
 
-### Hotfix Flow (Post 1.0.0)
+### Hotfix (Post 1.0.0)
 ```
 fix/hotfix-* ──► PR (label: hotfix) ──► main ──► reverse merge to develop
 ```
-- Production emergencies only (crash, data loss)
-- Direct PR to main with `hotfix` label
-- Always reverse merge to develop after
-
-## Pull Request
-- PR 생성 시 항상 repository owner를 assignee로 등록한다.
-- GitHub MCP 도구 사용: PR 생성 후 `issue_write`로 assignee 추가.
-
-## Branch Naming
-| Type | Format | Example |
-|------|--------|---------|
-| Feature | `feat/issue-number-description` | `feat/12-add-login` |
-| Fix | `fix/issue-number-description` | `fix/34-null-crash` |
-| Release | `release/x.y.z` | `release/1.2.0` |
-| Hotfix | `fix/hotfix-description` | `fix/hotfix-crash-on-launch` |
+- Production emergencies only (crash, data loss).
