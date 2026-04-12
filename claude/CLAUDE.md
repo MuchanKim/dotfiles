@@ -46,11 +46,15 @@
 - Consider cascading errors. If multiple valid fix strategies exist, explain each option with its trade-offs and ask the user to choose.
 
 ## MCP Usage
-Use MCP tools instead of CLI alternatives or manual workflows whenever available.
+- Use MCP tools instead of CLI alternatives whenever available.
 - **GitHub MCP**: Always active. Use MCP over gh CLI for all GitHub operations.
 - **Notion MCP**: For writing guide documents and blog-style articles. Used on user request, but proactively suggest when documentation seems warranted during work.
 - **Discord MCP**: Only on explicit user request.
 - **Obsidian MCP**: Personal knowledge base. Used on explicit user request. May suggest adding to Obsidian when a new concept is learned. When writing notes, follow ~/.claude/rules/obsidian-conventions.md.
+
+## Git/Obsidian Conventions
+- 커밋/PR/브랜치 작업 시 ~/.claude/rules/git-conventions.md 규칙을 따를 것.
+- Obsidian 노트 작성 시 ~/.claude/rules/obsidian-conventions.md 규칙을 따를 것.
 
 ## Security
 - Before committing, verify no secrets are included in staged changes. If found, halt and warn.
@@ -61,5 +65,3 @@ Use MCP tools instead of CLI alternatives or manual workflows whenever available
 - When adding a new dependency, explain why native wasn't sufficient and get user approval.
 - Consider binary size, maintenance status, and license before suggesting any library.
 
-## Git Conventions
-- @~/.claude/rules/git-conventions.md

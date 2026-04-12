@@ -1,3 +1,7 @@
+---
+paths: ["**/*.md"]
+---
+
 # Obsidian Note Conventions
 
 Atomic notes + flexible depth + link-based knowledge graph.

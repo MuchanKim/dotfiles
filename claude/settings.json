@@ -1,10 +1,9 @@
 {
   "enabledPlugins": {
-    "github@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true
   },
   "language": "korean",
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "voiceEnabled": true
 }

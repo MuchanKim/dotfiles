@@ -1,3 +1,7 @@
+---
+paths: ["**/*.swift"]
+---
+
 # Swift Naming Conventions
 
 Based on Apple Swift API Design Guidelines. **Clarity at the point of use** is the top priority.

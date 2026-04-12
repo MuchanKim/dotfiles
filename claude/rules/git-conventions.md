@@ -1,3 +1,7 @@
+---
+paths: ["**/*.swift", "**/*.ts", "**/*.js", "**/*.py", "**/*.java", "**/*.kt", "**/*.c", "**/*.cpp"]
+---
+
 # Git Conventions
 
 ## Commit Message
