@@ -18,25 +18,25 @@ paths: ["**/*.swift", "**/*.xcodeproj/**", "**/*.xcworkspace/**"]
 ## Credentials
 - Store all tokens and secrets in Keychain. Never use UserDefaults for sensitive data.
 
-## Swift Concurrency — Approachable Concurrency 환경
-- `SWIFT_APPROACHABLE_CONCURRENCY = YES` 프로젝트에서 Obj-C protocol delegate 메서드에 `nonisolated`, `@preconcurrency`, `MainActor.assumeIsolated`를 수동으로 붙이지 않는다
-- 컴파일러가 @MainActor 클래스의 Obj-C delegate 메서드를 자동으로 MainActor-isolated로 추론한다
-- 수동 annotation은 컴파일러의 추론을 override하여 오히려 문제를 만든다
-- 순수 데이터 struct가 `Sendable`을 명시적으로 conform하면 default MainActor isolation이 자동 suppress된다 (SE-0466)
-- 테스트 타겟에도 `SWIFT_DEFAULT_ACTOR_ISOLATION` 설정이 메인 타겟과 일치해야 한다
+## Swift Concurrency — Approachable Concurrency
+- In `SWIFT_APPROACHABLE_CONCURRENCY = YES` projects, do NOT manually add `nonisolated`, `@preconcurrency`, or `MainActor.assumeIsolated` to Obj-C protocol delegate methods.
+- The compiler automatically infers MainActor isolation for Obj-C delegate methods in @MainActor classes.
+- Manual annotations override the compiler's inference and can cause issues.
+- Pure data structs that explicitly conform to `Sendable` automatically suppress default MainActor isolation (SE-0466).
+- Test targets must match `SWIFT_DEFAULT_ACTOR_ISOLATION` setting of the main target.
 
-## Extension 파일 분리 기준
-- 외부 프레임워크 import가 추가되면 → `타입+컨텍스트.swift`로 분리
-- 외부 의존 없고 같은 파일에서 private 멤버를 사용하면 → 같은 파일에 `// MARK: -`로 구분
-- 외부 의존 없고 private 멤버도 안 쓰면 → 같은 파일 선호 (파일이 300줄 넘으면 분리 검토)
-- 같은 파일 내 extension이 외부에 노출할 필요 없는 기능이면 → `private extension`으로 선언
-- 하나의 타입이 300줄을 넘기면 → 기능 단위로 `타입+기능.swift` 분리 검토
+## Extension File Separation
+- If an external framework import is added → separate into `Type+Context.swift`
+- No external dependency + uses private members in the same file → keep in same file with `// MARK: -`
+- No external dependency + no private member access → prefer same file (consider splitting if >300 lines)
+- If an extension in the same file doesn't need external exposure → declare as `private extension`
+- If a single type exceeds 300 lines → consider splitting by feature into `Type+Feature.swift`
 
 ## Access Control
-- **private 우선 원칙**: 모든 프로퍼티, 메서드는 가능한 한 가장 좁은 접근 수준으로 선언. 외부에서 쓸 이유가 없으면 `private`.
-- 같은 파일 내에서만 접근하면 `private`, 같은 모듈 내 다른 파일에서 접근하면 `internal` (기본값이므로 생략 가능)
-- extension 전체가 외부 노출 불필요하면 `private extension`으로 선언
-- 테스트에서 접근해야 하는 경우 `@testable import`로 `internal`에 접근 가능하므로, 테스트를 위해 접근 수준을 올리지 않는다
+- **Prefer private**: Declare all properties and methods at the narrowest access level possible. Use `private` unless there's a reason to expose.
+- Same-file only access → `private`. Cross-file within same module → `internal` (default, can be omitted).
+- If an entire extension doesn't need external exposure → declare as `private extension`.
+- For test access, use `@testable import` to reach `internal` — never widen access level just for tests.
 
 ## Documentation Comments (Based on Swift API Design Guidelines)
 

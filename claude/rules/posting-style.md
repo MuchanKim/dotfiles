@@ -2,13 +2,13 @@
 paths: ["**/*.md", "**/*.mdx"]
 ---
 
-# 포스팅/아티클 작성 스타일
+# Posting / Article Writing Style
 
-사용자가 포스팅, 블로그 글, 가이드 문서 작성을 요청할 때 아래 스타일을 따른다:
-- **어조**: ~입니다/~합니다 경어체 기본. "~거든요", "~잖아요" 를 섞어서 딱딱함 방지.
-- **도입**: 문제나 질문으로 시작. 정의부터 나열하지 않는다. "~를 하다가 ~한 상황을 만났습니다", "~가 정확히 뭘 하는 건지 아시나요?"
-- **설명 전개**: 공식 정의 인용 → "쉽게 말하면~" 자기 말 번역 → 코드로 증명 → "여기서 주의할 점은~" → "정리하면~"
-- **독자 예상 질문**: "여기서 궁금한 게 생기죠", "이게 왜 중요하냐면~", "근데 이러면 ~는 어떻게 되는 걸까요?"
-- **코드 예시 필수**: Before/After 대비, 또는 잘못된 코드 먼저 보여주고 왜 틀렸는지 설명 후 올바른 코드 제시
-- **영어 기술 용어 원문 유지**: "actor isolation" 을 "액터 격리"로 번역하지 않는다
-- **한 글 한 주제**: 여러 개념을 우겨넣지 않는다
+Follow this style when the user requests blog posts, guides, or article-style documents:
+- **Tone**: Polite Korean (~입니다/~합니다) as default. Mix in casual endings (~거든요, ~잖아요) to avoid stiffness.
+- **Opening**: Start with a problem or question. Never lead with definitions. e.g., "~하다가 ~한 상황을 만났습니다"
+- **Explanation flow**: Official definition quote → "in plain terms~" paraphrase → prove with code → "the key point here is~" → "to summarize~"
+- **Anticipate reader questions**: "Here's where it gets interesting", "Why does this matter?", "But then what happens to ~?"
+- **Code examples required**: Before/After comparison, or show incorrect code first, explain why it's wrong, then present the correct version.
+- **Keep English technical terms**: Do NOT translate "actor isolation" to "액터 격리".
+- **One topic per article**: Do not cram multiple concepts into a single post.

@@ -9,10 +9,10 @@ paths: ["**/*.swift", "**/*.ts", "**/*.js", "**/*.py", "**/*.java", "**/*.kt", "
 ### Title Format
 `[Type] #issue-number - summary`
 
-- Team project (Korean): `[Feat] #1 - 앱 레이어 초기 구조 세팅`
-- Personal project (English): `[Feat] #1 - Initial app layer structure setup`
+- Korean: `[Feat] #1 - 앱 레이어 초기 구조 세팅`
+- English: `[Feat] #1 - Initial app layer structure setup`
 
-> Language is specified per project in the project's CLAUDE.md. Defaults to English if unspecified.
+> If the project's CLAUDE.md does not specify a commit language, **ask the user on the first commit** and save the preference to project memory.
 
 ### Body
 
@@ -47,7 +47,7 @@ Why? (Optional)
 ### Tone (Korean commits)
 - Use concise developer shorthand: "~구현", "~적용", "~이전" — not formal "~했습니다".
 - Omit obvious descriptions. Only explain what isn't self-evident.
-- If there's a reason for the change, note it briefly (e.g., "Sendable 준수를 위해 ~변경").
+- If there's a reason for the change, note it briefly (e.g., "Sendable compliance requires ~").
 - Mark anything temporary or expected to change later.
 
 ### Tone (English commits)
@@ -58,16 +58,17 @@ Why? (Optional)
 
 - **Assignee and Label are required** when creating an issue.
 - Labels match issue types: ✨ Feat, 🐞 Bug, 📄 General, 🛠️ Refactor, ✏️ Chore, ⚙️ Setting
-- Title format: `[Label] 한글 요약` (e.g., `[⚙️ Setting] iOS 프로젝트 초기 세팅`)
-- Body: use polite form (~합니다).
+- Title format: `[Label] summary` (e.g., `[⚙️ Setting] iOS project initial setup`)
+- Body language follows the project's commit language convention.
 
 ## Pull Request
 
 - Title format: `[Emoji Type] #issue-number - summary`
-- Example: `[✏️ Chore] #14 - CI 워크플로우 추가 (빌드 체크 + SwiftFormat)`
+- Example: `[✏️ Chore] #14 - Add CI workflow (build check + SwiftFormat)`
 - Types: `[✨ Feat]` | `[🐞 Fix]` | `[✏️ Chore]` | `[🛠️ Refactor]` | `[⚙️ Setting]` | `[📄 Docs]`
 - Follow PR template if one exists in the repository.
 - Always assign the repository owner as assignee.
+- **Label is required.** Always assign a label matching the PR title type.
 
 ## Branches
 

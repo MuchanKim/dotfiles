@@ -53,8 +53,8 @@
 - **Obsidian MCP**: Personal knowledge base. Used on explicit user request. May suggest adding to Obsidian when a new concept is learned. When writing notes, follow ~/.claude/rules/obsidian-conventions.md.
 
 ## Git/Obsidian Conventions
-- 커밋/PR/브랜치 작업 시 ~/.claude/rules/git-conventions.md 규칙을 따를 것.
-- Obsidian 노트 작성 시 ~/.claude/rules/obsidian-conventions.md 규칙을 따를 것.
+- Follow ~/.claude/rules/git-conventions.md for all commit, PR, and branch operations.
+- Follow ~/.claude/rules/obsidian-conventions.md when writing Obsidian notes.
 
 ## Security
 - Before committing, verify no secrets are included in staged changes. If found, halt and warn.
