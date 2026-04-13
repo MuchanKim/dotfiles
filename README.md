@@ -39,6 +39,7 @@ claude/
 │   ├── git-conventions.md         Commit, PR, issue, branch rules
 │   ├── apple-platform.md         Apple dev rules (build, App Store, SwiftUI)
 │   ├── swift-conventions.md      Swift naming conventions (opt-in per project)
+│   ├── posting-style.md          Blog/article writing style guide
 │   └── obsidian-conventions.md   Note types, frontmatter, knowledge graph
 └── templates/                 → ~/.claude/templates/
     ├── apple-project.md          Project CLAUDE.md template for Apple apps
@@ -90,6 +91,11 @@ cd ~/dotfiles && git pull
 ```
 
 ## Changelog
+
+### 2026-04-13
+- Translate all Korean content in rules to English: `CLAUDE.md`, `git-conventions.md`, `apple-platform.md`, `posting-style.md`
+- `git-conventions.md`: Ask commit language on first commit if not specified in project CLAUDE.md; add PR label requirement
+- `posting-style.md` added to rules directory listing below
 
 ### 2026-04-08
 - Rewrite `git-conventions.md`: new `[Type] #issue` format, flexible commit language (Korean/English per project), AI trace forbidden
