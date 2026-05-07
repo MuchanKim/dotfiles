@@ -67,6 +67,40 @@ For multi-step tasks, state a brief plan:
 2. [Step] → verify: [check]
 ```
 
+## 5. Comments
+
+**Code says WHAT. Comments say WHY.** — *Clean Code*, Ch. 4
+
+**Default to no comment.** Add one only when the WHY is non-obvious. If a comment just restates the code, delete it or improve naming instead.
+
+### Do NOT write comments that:
+- **Restate the code** (e.g., `// PlaceInfo는 Liquid Glass 자동 적용을 위해 background 미지정` — the missing modifier is already visible).
+- **Restate the function/property name** (e.g., `/// 시트 종류별 detent를 반환합니다` on `func detent(for:)` — name says it).
+- **State what is NOT happening** (e.g., `// 카메라 이동 X` — absence is already visible in code).
+- **Translate code to Korean** without adding insight.
+- **Mark dead code "for later"** — delete it. Git remembers.
+- **Track changes / authors** — `git blame` does that.
+- **TODO without context** — `// TODO: fix later` is useless. Use `// TODO(#issue): short reason`.
+
+### DO write comments when:
+- **WHY a non-obvious decision was made** (tradeoff, constraint, workaround).
+- **Hidden invariant or precondition** the caller must respect.
+- **Dependence on framework/SDK behavior** that isn't obvious from the API.
+- **Workaround for a specific bug** — include issue/FB number.
+- **Surprising behavior** a future reader would question.
+- **Public API doc comment** (Swift: `///` required for `public`/`open`).
+
+### Doc comment format (Swift)
+- Use `///` only. Never `/** */`.
+- First line = single-sentence summary, ending with a period.
+- Function/method: what it **does**. Initializer: what it **creates**. Property/type: what it **is**.
+- Skip `- Parameters:` / `- Returns:` if the summary already conveys them. Never leave empty tags.
+
+### Self-check before keeping a comment
+Does it add information you can't get by reading the code? If no — delete. If yes — make it as short as possible.
+
+> Sources: Apple *Swift API Design Guidelines*, Google *Swift Style Guide*, *Clean Code* (Ch. 4), *The Pragmatic Programmer* (Topic 19).
+
 ---
 
 ## Problem-Solving Discipline
