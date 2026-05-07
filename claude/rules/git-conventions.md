@@ -46,6 +46,7 @@ Why? (Optional)
 
 ### Tone (Korean commits)
 - Use concise developer shorthand: "~구현", "~적용", "~이전" — not formal "~했습니다".
+- **Title must end with an action noun**: 구현 / 추가 / 제거 / 적용 / 이전 / 연결 / 재구성 / 정리 / 변경. Avoid trailing noun phrases like "X 구조 (모듈)" or "Y 정책" alone — always close with a verbal noun.
 - Omit obvious descriptions. Only explain what isn't self-evident.
 - If there's a reason for the change, note it briefly (e.g., "Sendable compliance requires ~").
 - Mark anything temporary or expected to change later.
