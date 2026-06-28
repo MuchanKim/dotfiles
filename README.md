@@ -36,13 +36,13 @@ machine-local runtime state.
 ```text
 codex/
 ├── agents/                         -> ~/.codex/agents/
-│   ├── harness-planner.toml            Sam Altman - Planner
+│   ├── harness-planner.toml            Dario Amodei - CTO
 │   ├── harness-implementer.toml        Jeff Dean - Implementer
-│   ├── harness-verifier.toml           Charity Majors - Verifier
+│   ├── harness-verifier.toml           John von Neumann - Verification Engineer
 │   ├── harness-reviewer-correctness.toml
-│   │                                  Linus Torvalds - Review A
+│   │                                  Linus Torvalds - Correctness Reviewer
 │   ├── harness-reviewer-verification-risk.toml
-│   │                                  Leslie Lamport - Review B
+│   │                                  Leslie Lamport - Systems Risk Reviewer
 │   └── harness-finalizer.toml          Elon Musk - Finalizer
 ├── hooks/
 │   └── codex_harness_dispatch.py    -> ~/.codex/hooks/codex_harness_dispatch.py
@@ -66,9 +66,11 @@ Start a Codex task with:
 하네스 모드로 해줘
 ```
 
-The Harness by Moo skill separates the work into planner, implementer, verifier, two reviewers,
-and finalizer roles. The hook layer only records safe runtime metadata and guards completion; it
-does not log prompts, file contents, secrets, or raw hook payloads.
+The Harness by Moo skill separates work into CTO planning, implementation, independent
+verification, two reviewer gates, and CEO finalization. The Verification Engineer runs build,
+test, lint, and approved manual checks, then the Correctness Reviewer and Systems Risk Reviewer
+review the diff together with that evidence. The hook layer only records safe runtime metadata and
+guards completion; it does not log prompts, file contents, secrets, or raw hook payloads.
 
 ## Updating
 

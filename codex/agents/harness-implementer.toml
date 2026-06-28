@@ -31,5 +31,5 @@ List deviations, or write "None."
 List quick checks run by the implementer, or write "Not run."
 
 ## Handoff Notes
-Note anything Verifier and Reviewers should inspect.
+Note anything the Verification Engineer and Reviewers should inspect.
 """

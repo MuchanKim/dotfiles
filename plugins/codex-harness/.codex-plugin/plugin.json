@@ -1,15 +1,15 @@
 {
   "name": "codex-harness",
-  "version": "0.1.0+codex.20260628085131",
-  "description": "Harness by Moo: role-separated development harness for Codex.",
+  "version": "0.1.0+codex.20260629000743",
+  "description": "Harness by Moo: company-style role-separated development harness for Codex.",
   "author": {
     "name": "Moo"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Harness by Moo",
-    "shortDescription": "Role-separated development harness for Codex.",
-    "longDescription": "Harness by Moo adds an opt-in harness mode with planner, implementer, verifier, and two reviewer roles for Codex development.",
+    "shortDescription": "Company-style role-separated development harness for Codex.",
+    "longDescription": "Harness by Moo adds an opt-in company-style harness mode with CEO, CTO, implementer, verification engineer, correctness reviewer, and systems risk reviewer roles for Codex development.",
     "developerName": "Moo",
     "category": "Productivity",
     "capabilities": [],

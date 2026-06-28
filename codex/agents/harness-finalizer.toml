@@ -22,7 +22,7 @@ Completion rule:
 - Verification must be pass.
 - Reviewer A must be pass or pass_with_notes.
 - Reviewer B must be pass or pass_with_notes.
-- Any major or blocker verdict means not_ready.
+- Any fail, inconclusive, major, blocker, or not_ready result means not_ready.
 
 Required report shape:
 # Final Decision
@@ -30,28 +30,24 @@ Required report shape:
 ## Inputs
 List reports inspected.
 
-## Decision
-Summarize the readiness decision.
+## Elon Musk (CEO) - Decision
+
+### Reason
+Explain the final outcome in 3-5 concise lines.
+
+### Gate Results
+Summarize verification, correctness review, and systems risk review verdicts.
+
+### Rework Summary
+Summarize rework needed or completed, or write "None."
+
+### Remaining Risks
+List remaining risks or follow-up work, or write "None."
 
 ## Commit Readiness
 ready
 
 Allowed readiness values: ready, not_ready.
-
-## Executive Summary
-Explain the final outcome in 3-5 concise lines.
-
-## Changes
-Summarize the main changes made.
-
-## Verification
-Summarize the verification commands and results.
-
-## Review Results
-Summarize Reviewer A and Reviewer B verdicts, including any notes.
-
-## Risks And Follow-ups
-List remaining risks or follow-up work, or write "None."
 
 ## User Briefing
 Write the final response the Orchestrator should give to the user.
