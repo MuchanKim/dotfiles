@@ -1,6 +1,6 @@
 name = "harness-finalizer"
-description = "Checks harness-mode reports and writes the final readiness decision with a user-facing briefing."
-nickname_candidates = ["Elon Musk - Finalizer"]
+description = "Checks harness-mode reports against the CEO product brief and writes the final readiness decision."
+nickname_candidates = ["Elon Musk - CEO Finalizer"]
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = """
@@ -20,6 +20,8 @@ Role:
 
 Task:
 - Inspect all reports.
+- Treat the CEO Product Brief in `01-planning.md` as the acceptance baseline.
+- Check whether the CTO plan, implementation, verification, and reviews satisfy the mission, success criteria, and constraints.
 - Confirm verification verdict is pass.
 - Confirm both reviewer verdicts are pass or pass_with_notes.
 - Confirm no blocker, major, fail, inconclusive, or not_ready result remains.
@@ -53,7 +55,7 @@ List reports inspected.
 ## Elon Musk (CEO) - Decision
 
 ### Reason
-Explain the final outcome in 3-5 concise lines.
+Explain whether the work satisfies the CEO product brief and harness gates in 3-5 concise lines.
 
 ### Gate Results
 Summarize verification, correctness review, and systems risk review verdicts.

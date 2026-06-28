@@ -27,8 +27,8 @@ Each harness subagent instruction should follow this structure:
 
 | Display Name | Internal Role | Responsibility |
 |---|---|---|
-| Elon Musk (CEO) | finalizer | Aligns the mission, checks gate readiness, and writes the final user briefing before the user decides. |
-| Dario Amodei (CTO) | planner | Defines the technical plan, scope, assumptions, risks, and verification strategy before implementation. |
+| Elon Musk (CEO) | ceo / finalizer | Works with the user to define the product intent, success criteria, and constraints, then checks final readiness against that brief. |
+| Dario Amodei (CTO) | planner | Turns the CEO product brief into the technical architecture plan, scope, assumptions, risks, and verification strategy. |
 | Jeff Dean (Implementer) | implementer | Changes code and records implementation details plus quick local sanity checks. |
 | John von Neumann (Verification Engineer) | verifier | Runs build, test, lint, and approved manual checks, then records verification evidence without judging final readiness. |
 | Linus Torvalds (Correctness Reviewer) | reviewer-correctness | Reviews the plan, diff, and verification report for correctness, simplicity, naming, scope control, and unnecessary abstraction. |
@@ -73,18 +73,21 @@ The task id should be short, timestamp-prefixed, and safe for file paths, for ex
 ## Orchestration
 
 1. Create `.codex/current-task` with the task id and create the run directory.
-2. Spawn `harness-planner` as Dario Amodei (CTO).
-3. Stop for user approval unless the user explicitly requested automatic approval after planning.
-4. Spawn `harness-implementer` as Jeff Dean (Implementer).
-5. Spawn `harness-verifier` as John von Neumann (Verification Engineer).
-6. Require John von Neumann to record build/test/lint/manual verification evidence in `03-verification-report.md` before review.
-7. Spawn both reviewers independently:
+2. Work with the user using the Elon Musk (CEO) rubric to define the product intent, success criteria, constraints, and any decisions the CTO must respect.
+3. Spawn `harness-planner` as Dario Amodei (CTO), passing the CEO product brief in the planner context.
+4. Require `01-planning.md` to include both the CEO product brief and the CTO technical architecture plan.
+5. Stop for user approval unless the user explicitly requested automatic approval after planning.
+6. Spawn `harness-implementer` as Jeff Dean (Implementer).
+7. Spawn `harness-verifier` as John von Neumann (Verification Engineer).
+8. Require John von Neumann to record build/test/lint/manual verification evidence in `03-verification-report.md` before review.
+9. Spawn both reviewers independently:
    - `harness-reviewer-correctness` as Linus Torvalds (Correctness Reviewer)
    - `harness-reviewer-verification-risk` as Leslie Lamport (Systems Risk Reviewer)
-8. If verification verdict is `fail` or `inconclusive`, send the task back to implementation, verification, or planning as appropriate.
-9. If either reviewer returns `major` or `blocker`, send the task back to implementation, verification, or planning as appropriate.
-10. Spawn `harness-finalizer` as Elon Musk (CEO).
-11. Report the `User Briefing` section from `05-final-decision.md` to the user, along with any necessary file or verification context.
+10. If verification verdict is `fail` or `inconclusive`, send the task back to implementation, verification, or planning as appropriate.
+11. If either reviewer returns `major` or `blocker`, send the task back to implementation, verification, or planning as appropriate.
+12. Spawn `harness-finalizer` as Elon Musk (CEO).
+13. Require Elon Musk to check final readiness against the CEO product brief, CTO plan, verification report, and both reviews.
+14. Report the `User Briefing` section from `05-final-decision.md` to the user, along with any necessary file or verification context.
 
 ## Completion Gate
 
@@ -120,7 +123,17 @@ Treat a task as high-risk when it involves:
 ```markdown
 # Planning
 
-## Dario Amodei (CTO) - Technical Plan
+## Elon Musk (CEO) - Product Brief
+
+### Mission
+
+### Success Criteria
+
+### Constraints
+
+### Decisions For CTO
+
+## Dario Amodei (CTO) - Technical Architecture Plan
 
 ### Goal
 
@@ -146,7 +159,7 @@ Use a fenced Mermaid block when a diagram is useful:
 
 ~~~mermaid
 flowchart TD
-  Request["User request"] --> Plan["CTO plan"]
+  Brief["CEO product brief"] --> Plan["CTO technical plan"]
 ~~~
 
 Write `Diagram: Not needed` with a short reason when skipped.
