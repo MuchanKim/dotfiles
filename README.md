@@ -1,6 +1,6 @@
 # dotfiles
 
-Personal Claude Code development environment configuration.
+Personal Codex development environment configuration.
 
 ## Quick Start
 
@@ -10,101 +10,84 @@ cd ~/dotfiles
 ./install.sh
 ```
 
-The install script creates symlinks from `~/.claude/` to this repo. Existing files are backed up with `.bak` suffix.
+The install script links Codex agents, hooks, and the local Harness by Moo plugin source into the
+locations Codex Desktop expects. Existing non-symlink files or directories are backed up with a
+`.bak` suffix before replacement.
 
 ## After Install
 
-Install Claude Code plugins manually (not managed by dotfiles):
+Install the personal plugin from the default personal marketplace:
 
 ```bash
-claude plugin add github
-claude plugin add superpowers
-claude plugin add swift-lsp
+/Applications/Codex.app/Contents/Resources/codex plugin add codex-harness@personal
 ```
 
-For Apple projects, register the apple-docs MCP at project level:
+Then restart Codex Desktop, run `/hooks`, and trust this command:
 
 ```bash
-claude mcp add apple-docs --project -- npx -y @kimsungwhee/apple-docs-mcp@latest
+python3 ~/.codex/hooks/codex_harness_dispatch.py
 ```
+
+Do not copy `~/.codex/config.toml` between machines. Hook trust and installed-plugin state are
+machine-local runtime state.
 
 ## What's Included
 
-```
-claude/
-├── CLAUDE.md                  → ~/.claude/CLAUDE.md (global agent rules)
-├── settings.json              → ~/.claude/settings.json (runtime config)
-├── mcp.json.template          → ~/.claude/.mcp.json (generated with $HOME substitution)
-├── rules/                     → ~/.claude/rules/
-│   ├── git-conventions.md         Commit, PR, issue, branch rules
-│   ├── apple-platform.md         Apple dev rules (build, App Store, SwiftUI)
-│   ├── swift-conventions.md      Swift naming conventions (opt-in per project)
-│   ├── posting-style.md          Blog/article writing style guide
-│   └── obsidian-conventions.md   Note types, frontmatter, knowledge graph
-└── templates/                 → ~/.claude/templates/
-    ├── apple-project.md          Project CLAUDE.md template for Apple apps
-    └── init-apple-project.sh     Interactive setup script (platform, arch, distribution)
-```
+```text
+codex/
+├── agents/                         -> ~/.codex/agents/
+│   ├── harness-planner.toml            Sam Altman - Planner
+│   ├── harness-implementer.toml        Jeff Dean - Implementer
+│   ├── harness-verifier.toml           Charity Majors - Verifier
+│   ├── harness-reviewer-correctness.toml
+│   │                                  Linus Torvalds - Review A
+│   ├── harness-reviewer-verification-risk.toml
+│   │                                  Leslie Lamport - Review B
+│   └── harness-finalizer.toml          Elon Musk - Finalizer
+├── hooks/
+│   └── codex_harness_dispatch.py    -> ~/.codex/hooks/codex_harness_dispatch.py
+└── hooks.json.template              -> ~/.codex/hooks.json
 
-## Usage in Projects
+agents/
+└── plugins/
+    └── marketplace.json.template    -> ~/.agents/plugins/marketplace.json
 
-### Apple project setup
-
-Run the init script from the project root:
-
-```bash
-~/.claude/templates/init-apple-project.sh
-```
-
-Or Claude will suggest running it when it detects a new Apple project without a CLAUDE.md.
-
-### Reference global rules from a project CLAUDE.md
-
-```markdown
-@~/.claude/rules/apple-platform.md
-@~/.claude/rules/swift-conventions.md
+plugins/
+└── codex-harness/                   -> ~/plugins/codex-harness/
+    ├── .codex-plugin/plugin.json
+    └── skills/harness-mode/SKILL.md
 ```
 
-### Set commit language per project
+## Harness Workflow
 
-In project's `.claude/CLAUDE.md`:
+Start a Codex task with:
 
-```markdown
-## Project Overrides
-- Commit/PR/Issue language: Korean
+```text
+하네스 모드로 해줘
 ```
+
+The Harness by Moo skill separates the work into planner, implementer, verifier, two reviewers,
+and finalizer roles. The hook layer only records safe runtime metadata and guards completion; it
+does not log prompts, file contents, secrets, or raw hook payloads.
 
 ## Updating
 
-Edit files in `~/dotfiles/` directly — symlinks make changes take effect immediately.
+Edit files in `~/dotfiles/`, then commit and push:
 
 ```bash
 cd ~/dotfiles
-git add -A && git commit -m "[Chore] #N - description"
+git add -A
+git commit -m "Update Codex harness dotfiles"
 git push
 ```
 
-On other machines:
+On another machine:
 
 ```bash
-cd ~/dotfiles && git pull
+cd ~/dotfiles
+git pull
+./install.sh
+/Applications/Codex.app/Contents/Resources/codex plugin add codex-harness@personal
 ```
 
-## Changelog
-
-### 2026-04-13
-- Translate all Korean content in rules to English: `CLAUDE.md`, `git-conventions.md`, `apple-platform.md`, `posting-style.md`
-- `git-conventions.md`: Ask commit language on first commit if not specified in project CLAUDE.md; add PR label requirement
-- `posting-style.md` added to rules directory listing below
-
-### 2026-04-08
-- Rewrite `git-conventions.md`: new `[Type] #issue` format, flexible commit language (Korean/English per project), AI trace forbidden
-- Add `swift-conventions.md`: Swift naming conventions as opt-in per-project rules
-- Slim down `apple-platform.md`: remove architecture/project structure (moved to templates), keep platform-common rules only
-- Add `templates/`: Apple project CLAUDE.md template + interactive init script
-- Add `mcp.json.template`: Obsidian MCP with iCloud path support
-- Update `CLAUDE.md`: commit now requires user approval, Apple project init script reference added
-- Update `install.sh`: support templates and MCP config generation
-
-### 2026-03-28
-- Initial dotfiles setup: CLAUDE.md, settings.json, rules/ (apple-platform, git-conventions, obsidian-conventions)
+Restart Codex Desktop after reinstalling or updating the plugin.
