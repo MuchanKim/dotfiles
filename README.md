@@ -69,8 +69,14 @@ Start a Codex task with:
 The Harness by Moo skill separates work into CTO planning, implementation, independent
 verification, two reviewer gates, and CEO finalization. The Verification Engineer runs build,
 test, lint, and approved manual checks, then the Correctness Reviewer and Systems Risk Reviewer
-review the diff together with that evidence. The hook layer only records safe runtime metadata and
-guards completion; it does not log prompts, file contents, secrets, or raw hook payloads.
+review the diff together with that evidence. The hook layer records safe runtime metadata and
+surfaces readiness warnings without blocking completion; it does not log prompts, file contents,
+secrets, or raw hook payloads.
+
+The CTO planning report decides whether TDD is required, optional, or not appropriate before
+implementation begins. It also includes Mermaid diagrams for non-trivial development work when a
+diagram clarifies architecture, flow, state transitions, or boundaries. Final user briefings are
+written in Korean by default, while internal coordination reports stay in English.
 
 ## Updating
 

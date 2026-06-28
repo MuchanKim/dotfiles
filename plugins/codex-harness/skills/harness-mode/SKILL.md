@@ -13,6 +13,16 @@ Run development work through role-separated Codex subagents so the same agent do
 
 The harness uses lightweight executive-style role labels for readability, but the labels are not personality prompts. Treat them as responsibility rubrics.
 
+## Agent Instruction Shape
+
+Each harness subagent instruction should follow this structure:
+
+- `Context`: the inputs the agent must read before acting
+- `Role`: the responsibility rubric, including the expectation of a careful, accountable senior specialist with 10+ years of relevant experience
+- `Task`: the work the agent must perform
+- `Output`: the exact artifact the agent must produce
+- `Boundaries`: the actions the agent must not take
+
 ## Roles
 
 | Display Name | Internal Role | Responsibility |
@@ -24,6 +34,23 @@ The harness uses lightweight executive-style role labels for readability, but th
 | Linus Torvalds (Correctness Reviewer) | reviewer-correctness | Reviews the plan, diff, and verification report for correctness, simplicity, naming, scope control, and unnecessary abstraction. |
 | Leslie Lamport (Systems Risk Reviewer) | reviewer-verification-risk | Reviews state transitions, edge cases, concurrency/system risks, and whether verification evidence is sufficient. |
 | User | final decision maker | Approves plans, scope changes, and final acceptance. |
+
+## Language and Diagrams
+
+- Keep internal coordination reports in English unless the user explicitly asks otherwise.
+- Write the `User Briefing` section in Korean by default. Keep code identifiers, file paths, commands, and verdict values in English.
+- For non-trivial development tasks, Dario Amodei must include a Mermaid diagram when it would clarify architecture, data flow, control flow, state transitions, dependency boundaries, or the harness execution path.
+- Skip Mermaid for trivial text/config edits, single-file mechanical changes, or tasks where a diagram would restate the bullet list. When skipped, write `Diagram: Not needed` with a short reason.
+
+## TDD Decision Rule
+
+Dario Amodei decides whether TDD is appropriate before implementation begins.
+
+Use TDD when the task changes behavior that can be specified with an automated test, fixes a bug, adds parsing/validation, changes state transitions, or risks regression.
+
+Do not force TDD for documentation-only changes, prompt/skill wording changes, metadata-only edits, mechanical renames, generated artifacts, or work where the meaningful verification is schema parsing, hook parsing, build/lint, or manual inspection.
+
+When TDD is not appropriate, Dario Amodei must name the alternative verification strategy so John von Neumann and both reviewers know what evidence to expect.
 
 ## State Files
 
@@ -94,15 +121,37 @@ Treat a task as high-risk when it involves:
 # Planning
 
 ## Dario Amodei (CTO) - Technical Plan
-- Goal:
-- Non-goals:
-- User decision needed:
-- Assumptions:
-- Scope:
-- Approach:
-- Files expected to change:
-- Verification strategy:
-- Risks:
+
+### Goal
+
+### Non-goals
+
+### User Decision Needed
+
+### Assumptions
+
+### Scope
+
+### Approach
+
+### Files Expected To Change
+
+### TDD Decision
+TDD required | TDD optional | TDD not appropriate
+
+### Verification Strategy
+
+### Diagram
+Use a fenced Mermaid block when a diagram is useful:
+
+~~~mermaid
+flowchart TD
+  Request["User request"] --> Plan["CTO plan"]
+~~~
+
+Write `Diagram: Not needed` with a short reason when skipped.
+
+### Risks
 
 ## User Approval
 - Status:
@@ -213,10 +262,11 @@ ready
 Allowed readiness values: ready, not_ready.
 
 ## User Briefing
-- What changed:
-- Verification:
-- Review result:
-- Decision needed:
+- 변경사항:
+- 검증:
+- 리뷰 결과:
+- 남은 리스크:
+- 필요한 결정:
 ```
 
 ## Cleanup
@@ -232,6 +282,7 @@ After the final decision is `ready`:
 
 - Hooks are guardrails and logs; they do not spawn subagents.
 - The Orchestrator controls subagent spawning and state transitions.
+- Hook warnings are non-blocking readiness signals. The Orchestrator must still enforce the harness gates before claiming completion.
 - Do not log prompt content, file content dumps, secrets, or raw hook payloads.
 - Keep `.codex/runs/` and `.codex/current-task` out of product commits unless the user explicitly asks to version them.
 - Role labels are display labels and responsibility rubrics, not persona imitation prompts.

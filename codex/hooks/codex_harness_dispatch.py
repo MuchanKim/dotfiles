@@ -113,10 +113,10 @@ def append_stop_log(event_name, cwd, repo_root_present, changed_file_count, deci
     )
 
 
-def emit_context(_message):
-    # Codex treats decision:block as a continuation request, not a passive warning.
-    # Keep Stop non-blocking; the harness warning is recorded in safe logs.
-    emit_quiet()
+def emit_context(message):
+    # Keep Stop non-blocking. Codex may surface additionalContext as model feedback;
+    # unsupported keys are ignored by older runtimes.
+    print(json.dumps({"additionalContext": message, "message": message}))
 
 
 def emit_quiet():
