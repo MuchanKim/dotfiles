@@ -1,0 +1,48 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 __HOME__/.codex/hooks/codex_harness_dispatch.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 __HOME__/.codex/hooks/codex_harness_dispatch.py",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 __HOME__/.codex/hooks/codex_harness_dispatch.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 __HOME__/.codex/hooks/codex_harness_dispatch.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

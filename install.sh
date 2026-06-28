@@ -3,54 +3,48 @@ set -e
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# Helper: backup existing file/dir if it's not already a symlink, then create symlink
-link_file() {
-    local src="$1" dst="$2"
-    if [ -f "$dst" ] && [ ! -L "$dst" ]; then
-        mv "$dst" "$dst.bak"
-        echo "  ⚠ Backed up existing $(basename "$dst") → $(basename "$dst").bak"
-    fi
-    ln -sf "$src" "$dst"
-    echo "  ✓ $dst"
-}
-
 link_dir() {
     local src="$1" dst="$2"
     if [ -d "$dst" ] && [ ! -L "$dst" ]; then
         mv "$dst" "$dst.bak"
-        echo "  ⚠ Backed up existing $(basename "$dst")/ → $(basename "$dst").bak/"
+        echo "  backed up existing $(basename "$dst")/ -> $(basename "$dst").bak/"
     fi
     ln -sfn "$src" "$dst"
-    echo "  ✓ $dst/"
+    echo "  linked $dst/"
 }
 
-echo "=== Claude Code dotfiles ==="
+generate_template() {
+    local src="$1" dst="$2"
+    if [ -f "$dst" ] && [ ! -L "$dst" ]; then
+        mv "$dst" "$dst.bak"
+        echo "  backed up existing $(basename "$dst") -> $(basename "$dst").bak"
+    fi
+    sed "s|__HOME__|$HOME|g" "$src" > "$dst"
+    echo "  generated $dst"
+}
+
+echo "=== Codex Harness by Moo dotfiles ==="
 echo ""
 
-mkdir -p ~/.claude
+mkdir -p ~/.codex ~/.agents/plugins ~/plugins
 
-# Core config
-echo "--- Core ---"
-link_file "$DOTFILES_DIR/claude/CLAUDE.md" ~/.claude/CLAUDE.md
-link_file "$DOTFILES_DIR/claude/settings.json" ~/.claude/settings.json
-link_dir  "$DOTFILES_DIR/claude/rules" ~/.claude/rules
-link_dir  "$DOTFILES_DIR/claude/templates" ~/.claude/templates
-
-# MCP config (substitute $HOME into template)
-echo ""
-echo "--- MCP ---"
-if [ -f "$DOTFILES_DIR/claude/mcp.json.template" ]; then
-    sed "s|__HOME__|$HOME|g" "$DOTFILES_DIR/claude/mcp.json.template" > ~/.claude/.mcp.json
-    echo "  ✓ ~/.claude/.mcp.json (generated from template)"
-fi
+echo "--- Codex agents ---"
+link_dir "$DOTFILES_DIR/codex/agents" ~/.codex/agents
 
 echo ""
-echo "=== Plugins (install manually) ==="
-echo "  claude plugin add github"
-echo "  claude plugin add superpowers"
-echo "  claude plugin add swift-lsp"
+echo "--- Codex hooks ---"
+link_dir "$DOTFILES_DIR/codex/hooks" ~/.codex/hooks
+generate_template "$DOTFILES_DIR/codex/hooks.json.template" ~/.codex/hooks.json
+
 echo ""
-echo "=== Apple project MCP (register per project) ==="
-echo "  claude mcp add apple-docs --project -- npx -y @kimsungwhee/apple-docs-mcp@latest"
+echo "--- Personal plugin marketplace ---"
+link_dir "$DOTFILES_DIR/plugins/codex-harness" ~/plugins/codex-harness
+generate_template "$DOTFILES_DIR/agents/plugins/marketplace.json.template" ~/.agents/plugins/marketplace.json
+
+echo ""
+echo "=== Manual Codex steps ==="
+echo "  /Applications/Codex.app/Contents/Resources/codex plugin add codex-harness@personal"
+echo "  Restart Codex Desktop"
+echo "  Run /hooks and trust: python3 $HOME/.codex/hooks/codex_harness_dispatch.py"
 echo ""
 echo "Done!"
