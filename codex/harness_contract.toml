@@ -1,0 +1,246 @@
+[metadata]
+name = "Codex Harness Contract"
+canonical_policy_source = true
+
+[prompt_patterns]
+harness_request = [
+  "하네스 모드",
+  "하네스모드",
+  "하네스로 하자",
+  "하네스로 진행",
+  "하네스로 가자",
+  "harness mode",
+  "harness-mode",
+]
+light_harness = ["간단하게", "가볍게", "simple", "light", "quick"]
+approval = ["승인", "컨펌", "확인", "좋아", "진행", "넘겨", "ok", "okay", "approve", "approved", "go ahead", "continue"]
+review_improvement_rework = ["반영", "수정", "고쳐", "재작업", "rework", "apply", "fix"]
+review_improvement_decline = [
+  "반려",
+  "거절",
+  "나중",
+  "그대로",
+  "진행",
+  "skip",
+  "decline",
+  "defer",
+  "반영하지",
+  "반영 안",
+  "반영 말",
+  "수정하지",
+  "수정 안",
+  "수정 말",
+  "고치지",
+  "고치지 말",
+  "재작업하지",
+  "재작업 안",
+  "재작업 말",
+  "don't apply",
+  "do not apply",
+  "dont apply",
+  "don't rework",
+  "do not rework",
+  "no rework",
+  "without applying",
+]
+
+[tools]
+bash_allowed_phases = ["implementation", "rework", "verification", "reviews", "cto_review_triage", "final_elon_check"]
+current_task_write_phases = ["elon_requirements", "user_brief_approval", "user_plan_approval", "user_improvement_decision"]
+
+[user_transitions.approval]
+elon_requirements = "cto_planning"
+user_brief_approval = "cto_planning"
+user_plan_approval = "implementation"
+
+[user_transitions.clarification]
+user_plan_clarification = "cto_planning"
+
+[user_decisions.review_improvement]
+state_key = "review_improvement_decision"
+decline_value = "declined_by_user"
+rework_value = "rework_requested_by_user"
+decline_next_phase = "final_elon_check"
+rework_next_phase = "rework"
+
+[phases.elon_requirements]
+allowed_reports = []
+allowed_subagents = []
+
+[phases.user_brief_approval]
+allowed_reports = []
+allowed_subagents = []
+
+[phases.cto_planning]
+allowed_reports = ["01-planning.md"]
+allowed_subagents = ["harness-planner"]
+report_transition = { report = "01-planning.md", next_phase = "ceo_plan_challenge" }
+
+[phases.ceo_plan_challenge]
+allowed_reports = ["01-ceo-plan-challenge.md"]
+allowed_subagents = ["harness-ceo-plan-challenger"]
+report_transition = { report = "01-ceo-plan-challenge.md", next_phase = "cto_plan_response" }
+
+[phases.cto_plan_response]
+allowed_reports = ["01-cto-plan-response.md"]
+allowed_subagents = ["harness-planner"]
+status_transition = { report_key = "cto-plan-response", transitions = { complete = "user_plan_approval", needs_user_clarification = "user_plan_clarification", needs_replan = "cto_planning" } }
+
+[phases.user_plan_clarification]
+allowed_reports = []
+allowed_subagents = []
+
+[phases.user_plan_approval]
+allowed_reports = []
+allowed_subagents = []
+
+[phases.implementation]
+allowed_reports = ["02-implementation-report.md"]
+allowed_subagents = ["harness-implementer"]
+report_transition = { report = "02-implementation-report.md", next_phase = "verification" }
+
+[phases.rework]
+allowed_reports = ["02-implementation-report.md"]
+allowed_subagents = ["harness-implementer"]
+report_transition = { report = "02-implementation-report.md", next_phase = "verification" }
+
+[phases.verification]
+allowed_reports = ["03-verification-report.md"]
+allowed_subagents = ["harness-verifier"]
+status_transition = { report_key = "verification", transitions = { pass = "reviews", fail = "rework", inconclusive = "rework" } }
+
+[phases.reviews]
+allowed_reports = ["04-review-correctness.md", "04-review-verification-risk.md", "04-review-design-patterns.md"]
+allowed_subagents = ["harness-reviewer-correctness", "harness-reviewer-verification-risk", "harness-reviewer-design-patterns"]
+
+[phases.cto_review_triage]
+allowed_reports = ["04-review-cto-triage.md"]
+allowed_subagents = ["harness-planner"]
+status_transition = { report_key = "cto-review-triage", transitions = { complete = "final_elon_check", needs_user_decision = "user_improvement_decision", needs_rework = "rework" } }
+
+[phases.user_improvement_decision]
+allowed_reports = []
+allowed_subagents = []
+
+[phases.final_elon_check]
+allowed_reports = ["05-final-decision.md"]
+allowed_subagents = ["harness-finalizer"]
+status_transition = { report_key = "final-decision", transitions = { ready = "ready", not_ready = "rework" } }
+
+[phases.ready]
+allowed_reports = []
+allowed_subagents = []
+
+[reports.planning]
+file = "01-planning.md"
+required_for_completion = true
+
+[reports."ceo-plan-challenge"]
+file = "01-ceo-plan-challenge.md"
+section = "Verdict"
+allowed_statuses = ["accepted", "needs_cto_response", "needs_user_clarification"]
+completion_passes = ["accepted", "needs_cto_response"]
+warning_key = "ceo_plan_challenge"
+required_for_completion = true
+
+[reports."cto-plan-response"]
+file = "01-cto-plan-response.md"
+section = "Response Status"
+allowed_statuses = ["complete", "needs_user_clarification", "needs_replan"]
+completion_passes = ["complete"]
+warning_key = "cto_plan_response"
+required_for_completion = true
+
+[reports.implementation]
+file = "02-implementation-report.md"
+required_for_completion = true
+
+[reports.verification]
+file = "03-verification-report.md"
+section = "Verdict"
+allowed_statuses = ["pass", "fail", "inconclusive"]
+completion_passes = ["pass"]
+warning_key = "verification"
+required_for_completion = true
+
+[reports."review-correctness"]
+file = "04-review-correctness.md"
+section = "Verdict"
+allowed_statuses = ["pass", "pass_with_notes", "major", "blocker"]
+completion_passes = ["pass", "pass_with_notes"]
+warning_key = "review_correctness"
+required_for_completion = true
+
+[reports."review-verification-risk"]
+file = "04-review-verification-risk.md"
+section = "Verdict"
+allowed_statuses = ["pass", "pass_with_notes", "major", "blocker"]
+completion_passes = ["pass", "pass_with_notes"]
+warning_key = "review_verification_risk"
+required_for_completion = true
+
+[reports."review-design-patterns"]
+file = "04-review-design-patterns.md"
+section = "Verdict"
+allowed_statuses = ["pass", "pass_with_notes", "improvement_recommended", "major", "blocker"]
+completion_passes = ["pass", "pass_with_notes", "improvement_recommended"]
+warning_key = "review_design_patterns"
+required_for_completion = true
+
+[reports."cto-review-triage"]
+file = "04-review-cto-triage.md"
+section = "Triage Status"
+allowed_statuses = ["complete", "needs_user_decision", "needs_rework"]
+completion_passes = ["complete"]
+warning_key = "cto_triage"
+required_for_completion = true
+
+[reports."final-decision"]
+file = "05-final-decision.md"
+section = "Commit Readiness"
+allowed_statuses = ["ready", "not_ready"]
+completion_passes = ["ready"]
+warning_key = "readiness"
+required_for_completion = true
+
+[review_gate]
+required_reports = ["review-correctness", "review-verification-risk", "review-design-patterns"]
+next_phase_when_passed = "cto_review_triage"
+next_phase_when_blocked = "rework"
+
+[review_reports_by_subagent]
+harness-reviewer-correctness = "04-review-correctness.md"
+harness-reviewer-verification-risk = "04-review-verification-risk.md"
+harness-reviewer-design-patterns = "04-review-design-patterns.md"
+
+[completion.final_decision]
+user_briefing_section = "User Briefing"
+user_briefing_warning_key = "user_briefing=missing"
+user_declined_required_token = "user_declined"
+user_declined_warning_key = "final_user_declined_decision=missing"
+
+[completion.design_improvement]
+status = "improvement_recommended"
+recommendations_reviewed_section = "Recommendations Reviewed"
+recommendations_reviewed_warning_key = "cto_triage_recommendations_reviewed=missing"
+decisions_section = "Decisions"
+decisions_warning_key = "cto_triage_decisions=missing"
+must_apply_token = "must_apply"
+must_apply_warning_key = "cto_triage_decision=must_apply"
+user_decision_token = "user_decision"
+user_decision_warning_key = "cto_triage_decision=user_decision"
+declined_by_cto_token = "declined_by_cto"
+declined_reasons_section = "Declined Reasons"
+declined_reason_warning_key = "cto_triage_declined_reason=missing"
+final_declined_reason_warning_key = "final_declined_reason=missing"
+declined_reason_values = [
+  "scope_exceeded",
+  "over_abstraction_for_current_need",
+  "conflicts_with_existing_style",
+  "low_benefit_relative_to_risk",
+  "better_as_follow_up",
+  "already_satisfied_by_existing_code",
+]
+
+[completion.placeholder_sections]
+labels = ["변경사항", "검증", "리뷰 결과", "남은 리스크", "필요한 결정", "changed files", "summary", "notes"]

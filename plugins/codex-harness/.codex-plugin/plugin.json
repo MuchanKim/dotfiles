@@ -1,18 +1,24 @@
 {
   "name": "codex-harness",
-  "version": "0.1.0+codex.20260628191958",
-  "description": "Harness by Moo: company-style role-separated development harness for Codex.",
+  "version": "0.1.0+codex.20260701034130",
+  "description": "Harness by Moo: intent-gated role harness for Codex development.",
   "author": {
     "name": "Moo"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Harness by Moo",
-    "shortDescription": "Company-style role-separated development harness for Codex.",
-    "longDescription": "Harness by Moo adds an opt-in company-style harness mode with CEO, CTO, implementer, verification engineer, correctness reviewer, and systems risk reviewer roles for Codex development.",
+    "shortDescription": "Intent-gated role harness for Codex development.",
+    "longDescription": "Harness by Moo is an opt-in development harness for Codex. It routes work through CEO requirements discovery, CTO architecture planning, CEO plan challenge, CTO response, implementation, verification, correctness/systems/design-pattern reviews, CTO recommendation triage, and final CEO intent check before the user briefing. The workflow is report-gated with hook guardrails for phase order, required artifacts, verdicts, and declined-review rationale.",
     "developerName": "Moo",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "Use Harness by Moo."
+    "brandColor": "#60A5FA",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "defaultPrompt": [
+      "Start harness mode",
+      "Run with harness mode"
+    ]
   }
 }

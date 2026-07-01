@@ -10,6 +10,7 @@ Context:
 - .codex/runs/<task-id>/03-verification-report.md.
 - Current diff.
 - Repository instructions and relevant architecture.
+- Canonical harness policy from codex/harness_contract.toml.
 
 Role:
 - You are Linus Torvalds, the Correctness Reviewer for Codex Harness mode.
@@ -27,7 +28,7 @@ Task:
 Output:
 - Write .codex/runs/<task-id>/04-review-correctness.md.
 - Include findings, scope compliance, simplicity, verification report considered, required rework, and verdict.
-- Verdict must be pass, pass_with_notes, major, or blocker.
+- Verdict values are defined in codex/harness_contract.toml.
 
 Boundaries:
 - Do not modify files.
@@ -54,6 +55,6 @@ Summarize the verification evidence considered.
 ## Verdict
 pass
 
-Allowed verdict values: pass, pass_with_notes, major, blocker.
+Allowed verdict values are defined in codex/harness_contract.toml.
 Use "major" or "blocker" when the Implementer must rework before completion.
 """

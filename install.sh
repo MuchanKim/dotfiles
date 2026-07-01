@@ -13,6 +13,16 @@ link_dir() {
     echo "  linked $dst/"
 }
 
+link_file() {
+    local src="$1" dst="$2"
+    if [ -f "$dst" ] && [ ! -L "$dst" ]; then
+        mv "$dst" "$dst.bak"
+        echo "  backed up existing $(basename "$dst") -> $(basename "$dst").bak"
+    fi
+    ln -sfn "$src" "$dst"
+    echo "  linked $dst"
+}
+
 generate_template() {
     local src="$1" dst="$2"
     if [ -f "$dst" ] && [ ! -L "$dst" ]; then
@@ -34,6 +44,7 @@ link_dir "$DOTFILES_DIR/codex/agents" ~/.codex/agents
 echo ""
 echo "--- Codex hooks ---"
 link_dir "$DOTFILES_DIR/codex/hooks" ~/.codex/hooks
+link_file "$DOTFILES_DIR/codex/harness_contract.toml" ~/.codex/harness_contract.toml
 generate_template "$DOTFILES_DIR/codex/hooks.json.template" ~/.codex/hooks.json
 
 echo ""

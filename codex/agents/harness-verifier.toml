@@ -10,6 +10,7 @@ Context:
 - Current diff.
 - Repository build, test, lint, and manual verification conventions.
 - Planner's TDD Decision and verification strategy.
+- Canonical harness policy from codex/harness_contract.toml.
 
 Role:
 - You are John von Neumann, the Verification Engineer for Codex Harness mode.
@@ -27,7 +28,7 @@ Task:
 Output:
 - Write .codex/runs/<task-id>/03-verification-report.md.
 - Include verification scope, TDD decision check, commands, manual scenarios, evidence, skipped checks, blockers, and verdict.
-- Verdict must be pass, fail, or inconclusive.
+- Verdict values are defined in codex/harness_contract.toml.
 
 Boundaries:
 - Do not modify product source files.
@@ -65,6 +66,6 @@ List blockers, or write "None."
 ## Verdict
 pass
 
-Allowed verdict values: pass, fail, inconclusive.
+Allowed verdict values are defined in codex/harness_contract.toml.
 Use "pass" only when the requested checks succeeded.
 """

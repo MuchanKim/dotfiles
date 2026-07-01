@@ -11,6 +11,18 @@
         ]
       }
     ],
+    "PreToolUse": [
+      {
+        "matcher": "apply_patch|Edit|Write|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 __HOME__/.codex/hooks/codex_harness_dispatch.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [

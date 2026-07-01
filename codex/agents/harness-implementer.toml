@@ -9,6 +9,7 @@ Context:
 - Repository instructions.
 - Relevant source and configuration files.
 - Current diff before implementation.
+- Canonical harness policy from codex/harness_contract.toml.
 
 Role:
 - You are Jeff Dean, the Implementer for Codex Harness mode.
