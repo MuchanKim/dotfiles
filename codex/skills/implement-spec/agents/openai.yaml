@@ -1,0 +1,7 @@
+interface:
+  display_name: "Implement Spec"
+  short_description: "Implement approved scope and verify the result"
+  default_prompt: "Use $implement-spec to implement this authorized change and verify it within the agreed scope."
+
+policy:
+  allow_implicit_invocation: false

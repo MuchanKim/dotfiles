@@ -1,0 +1,7 @@
+interface:
+  display_name: "Review Change"
+  short_description: "Review correctness, scope, regressions, and evidence"
+  default_prompt: "Use $review-change to review this change against its requirements and report evidence-backed findings."
+
+policy:
+  allow_implicit_invocation: false

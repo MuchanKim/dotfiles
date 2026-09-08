@@ -1,0 +1,7 @@
+interface:
+  display_name: "Plan and Spec"
+  short_description: "Define behavior, scope, plan, and acceptance criteria"
+  default_prompt: "Use $plan-spec to prepare a reviewable specification and implementation plan for this request."
+
+policy:
+  allow_implicit_invocation: false
