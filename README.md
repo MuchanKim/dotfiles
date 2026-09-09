@@ -23,8 +23,6 @@ Existing files or links at these paths are moved to timestamped backup paths
 before the new links are created. Running the installer again leaves matching
 links unchanged.
 
-The former Codex harness and its runtime registrations have been removed.
-
 Machine-local Codex settings, plugins, credentials, and toolchains are not
 managed by this repository. Settings in `~/.codex/config.toml` remain local to
 each machine.
