@@ -39,6 +39,13 @@ Global defaults for Codex work. More specific project instructions take preceden
 ## Git and External Changes
 
 - Before committing, show the proposed message, summarize changed files and verification, check staged changes for obvious secrets, and get explicit approval.
+- Write every non-merge commit body using `What` and `Why` sections. Under `What`, list the concrete changes. Under `Why`, explain the problem, history, or intent that required them.
 - Announce before pushing, creating a PR, or adding a dependency. Explain why a third-party dependency is needed and get approval before adding it.
 - Get explicit approval before merging, pushing to the main branch, force-pushing, deleting branches or files, modifying CI/CD, or making system-level changes.
 - Prefer MCP integrations over CLI alternatives when the relevant integration is available.
+- When creating an issue or PR, assign the responsible person and apply the relevant existing repository labels. Verify the available assignees and labels instead of inventing values; if the responsible person is not established, ask before creation.
+- For issue-linked work, use `<type>/<issue-number>-<short-kebab-description>`.
+- Use these branch type prefixes: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`.
+- Use `feat`, never `feature`.
+- Use the issue number without `#` for compatibility with Git hosting URLs and integrations.
+- Keep the description lowercase and kebab-case. Example: `feat/185-message-diagnostics`.
