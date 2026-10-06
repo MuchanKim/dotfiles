@@ -33,7 +33,8 @@ link_item() {
 
 link_item "$DOTFILES_DIR/codex/AGENTS.md" "$HOME/.codex/AGENTS.md"
 
-for skill_name in plan-spec implement-spec review-change swift-conventions; do
+for skill_name in plan-spec implement-spec review-change swift-conventions \
+  swiftui-pro swift-concurrency-pro swift-testing-pro liquid-glass; do
   link_item \
     "$DOTFILES_DIR/codex/skills/$skill_name" \
     "$HOME/.agents/skills/$skill_name"
